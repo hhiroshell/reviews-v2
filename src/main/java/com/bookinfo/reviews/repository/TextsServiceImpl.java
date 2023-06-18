@@ -18,16 +18,15 @@ public class TextsServiceImpl implements TextsService {
     @Inject
     EntityManager em;
     
+    @Override
     public Texts getByProductId(int productId) {
         List<TextEntity> entities = em.createQuery("select r from TextEntity r where r.productId = :productId", TextEntity.class)
             .setParameter("productId", productId)
             .getResultList();
 
         List<Text> textList = new ArrayList<>(entities.size());
-        int i = 0;
         for (TextEntity entity : entities) {
-            textList.add(i, new Text(productId, entity.getReviewer(), entity.getText()));
-            i++;
+            textList.add(new Text(productId, entity.getReviewer(), entity.getText()));
         }
 
         Texts texts = new Texts(productId, textList);
