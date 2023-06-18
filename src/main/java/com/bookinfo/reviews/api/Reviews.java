@@ -1,11 +1,14 @@
-package com.bookinfo.reviews;
+package com.bookinfo.reviews.api;
 
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
 
 public class Reviews {
     private int id;
     private List<Review> reviews;
 
+    @JsonCreator
     public Reviews(int id, List<Review> reviews) {
         this.id = id;
         this.reviews = reviews;

@@ -1,21 +1,22 @@
 package com.bookinfo.reviews.repository;
 
-import com.bookinfo.reviews.TextsService;
+import com.bookinfo.reviews.domain.Text;
+import com.bookinfo.reviews.domain.Texts;
+import com.bookinfo.reviews.domain.TextsService;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.bookinfo.reviews.Text;
-import com.bookinfo.reviews.Texts;
-
+@Transactional
 @ApplicationScoped
 public class TextsServiceImpl implements TextsService {
 
-    @Inject
+    @PersistenceContext
     EntityManager em;
     
     @Override
@@ -26,10 +27,21 @@ public class TextsServiceImpl implements TextsService {
 
         List<Text> textList = new ArrayList<>(entities.size());
         for (TextEntity entity : entities) {
-            textList.add(new Text(productId, entity.getReviewer(), entity.getText()));
+            textList.add(new Text(entity.getReviewer(), entity.getText()));
         }
 
         Texts texts = new Texts(productId, textList);
         return texts;
+    }
+
+    @Override
+    public void add(Texts texts) {
+        for (Text text : texts.getTexts()) {
+            TextEntity entity = new TextEntity();
+            entity.setProductId(texts.getProductId());
+            entity.setReviewer(text.getReviewer());
+            entity.setText(text.getText());
+            em.persist(entity);
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.bookinfo.reviews;
+package com.bookinfo.reviews.domain;
 
 public class Rating {
     private String reviewer;
