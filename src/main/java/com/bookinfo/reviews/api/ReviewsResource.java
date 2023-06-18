@@ -1,10 +1,5 @@
 package com.bookinfo.reviews.api;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.eclipse.microprofile.rest.client.inject.RestClient;
-
 import com.bookinfo.reviews.domain.Rating;
 import com.bookinfo.reviews.domain.Ratings;
 import com.bookinfo.reviews.domain.RatingsService;
@@ -19,6 +14,11 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.MediaType;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 @Path("/reviews")
 public class ReviewsResource {
